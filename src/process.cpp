@@ -17,7 +17,7 @@ Process::Process(int my_id) : pid_(my_id) {
     //Find the user corresponding to that UID
     user_ = LinuxParser::User(uid);
     //parse and load ram
-    ram_ = stoi(LinuxParser::Ram(pid_))/1000;
+    ram_ = stoi(LinuxParser::str_check(LinuxParser::Ram(pid_)))/1000;
     //retrieve process start time
     up_time_  = LinuxParser::UpTime(pid_)/sysconf(_SC_CLK_TCK); 
     //get the command that started the process
