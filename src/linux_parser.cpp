@@ -13,6 +13,14 @@ using std::string;
 using std::to_string;
 using std::vector;
 
+string LinuxParser::str_check(string my_string){
+  if(my_string!="")
+    return my_string;
+  else
+    return "0";
+  
+}
+
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
   string line;
@@ -60,7 +68,7 @@ vector<int> LinuxParser::Pids() {
       // Is every character of the name a digit?
       string filename(file->d_name);
       if (std::all_of(filename.begin(), filename.end(), isdigit)) {
-        int pid = stoi(filename);
+        int pid = stoi(str_check(filename));
         pids.push_back(pid);
       }
     }
@@ -86,7 +94,7 @@ float LinuxParser::MemoryUtilization() {
         std::replace(line.begin(), line.end(), ':', ' ');
         std::istringstream linestream(line);
         linestream >> key >> value >> unit;
-        umap[key] =stoi(value);
+        umap[key] =stoi(str_check(value));
         i--;
     }
   }
@@ -106,7 +114,7 @@ long LinuxParser::UpTime() {
     std::getline(stream, line);
     std::istringstream linestream(line);
     linestream >> uptime >> idle;
-    return stol(uptime);
+    return stol(str_check(uptime));
   }
   return 0;
 }
@@ -133,7 +141,7 @@ long LinuxParser::ActiveJiffies(int pid) {
           parse.push_back(value);
         }
 
-         return stol(parse[13])+stol(parse[14])+stol(parse[15])+stol(parse[16]);
+         return stol(str_check(parse[13]))+stol(str_check(parse[14]))+stol(str_check(parse[15]))+stol(str_check(parse[16]));
       }
     }
   return 0; 
@@ -175,7 +183,7 @@ int LinuxParser::TotalProcesses() {
         std::istringstream linestream(line);
         linestream >> key >> value;
         if(key == "processes")
-          return stoi(value);
+          return stoi(str_check(value));
       }
     }
   return 0; 
@@ -192,7 +200,7 @@ int LinuxParser::RunningProcesses() {
         std::istringstream linestream(line);
         linestream >> key >> value;
         if(key == "procs_running")
-          return stoi(value);
+          return stoi(str_check(value));
       }
     } 
   return 0; 
@@ -295,7 +303,7 @@ long LinuxParser::UpTime(int pid) {
           parse.push_back(value);
         }
         //return only the uptime
-         return stol(parse[21]);
+         return stol(str_check(parse[21]));
       }
     }
   return 0; 

@@ -18,6 +18,9 @@ const std::string kVersionFilename{"/version"};
 const std::string kOSPath{"/etc/os-release"};
 const std::string kPasswordPath{"/etc/passwd"};
 
+//empty string checker
+std::string str_check(std::string my_string);
+
 // System
 float MemoryUtilization();
 long UpTime();
@@ -46,6 +49,8 @@ long Jiffies();
 long ActiveJiffies();
 long ActiveJiffies(int pid);
 long IdleJiffies();
+
+
 
 // Processes
 std::string Command(int pid);
