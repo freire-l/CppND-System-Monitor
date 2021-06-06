@@ -15,9 +15,9 @@ float Processor::Utilization() {
  
     std::vector<string> cpu_info = LinuxParser::CpuUtilization();
     
-    float Idle = stof(cpu_info[CPUStates::kIdle_]) + stof(cpu_info[CPUStates::kIOwait_]);
+    float Idle = stof(LinuxParser::str_check(cpu_info[CPUStates::kIdle_])) + stof(LinuxParser::str_check(cpu_info[CPUStates::kIOwait_]));
 
-    float NonIdle = stof(cpu_info[CPUStates::kUser_]) + stof(cpu_info[CPUStates::kNice_]) + stof(cpu_info[CPUStates::kSystem_]) + stof(cpu_info[CPUStates::kIRQ_]) + stof(cpu_info[CPUStates::kSoftIRQ_]) + stof(cpu_info[CPUStates::kSteal_]);
+    float NonIdle = stof(LinuxParser::str_check(cpu_info[CPUStates::kUser_])) + stof(LinuxParser::str_check(cpu_info[CPUStates::kNice_])) + stof(LinuxParser::str_check(cpu_info[CPUStates::kSystem_])) + stof(LinuxParser::str_check(cpu_info[CPUStates::kIRQ_])) + stof(LinuxParser::str_check(cpu_info[CPUStates::kSoftIRQ_])) + stof(LinuxParser::str_check(cpu_info[CPUStates::kSteal_]));
 
     float Total = Idle + NonIdle;
     
