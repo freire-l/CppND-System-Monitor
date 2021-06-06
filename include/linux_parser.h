@@ -29,7 +29,8 @@ std::string Kernel();
 
 // CPU
 enum CPUStates {
-  kUser_ = 0,
+  kCpu_name =0,
+  kUser_,
   kNice_,
   kSystem_,
   kIdle_,
@@ -50,7 +51,7 @@ long IdleJiffies();
 std::string Command(int pid);
 std::string Ram(int pid);
 std::string Uid(int pid);
-std::string User(int pid);
+std::string User(std::string uid);
 long int UpTime(int pid);
 };  // namespace LinuxParser
 
