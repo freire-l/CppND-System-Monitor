@@ -19,7 +19,7 @@ Process::Process(int my_id) : pid_(my_id) {
     //parse and load ram
     ram_ = stoi(LinuxParser::str_check(LinuxParser::Ram(pid_)))/1000;
     //retrieve process start time
-    up_time_  = LinuxParser::UpTime(pid_)/sysconf(_SC_CLK_TCK); 
+    up_time_  = LinuxParser::UpTime(pid_); 
     //get the command that started the process
     command_ = LinuxParser::Command(pid_);
     //Get cpu utilization

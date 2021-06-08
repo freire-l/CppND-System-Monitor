@@ -210,13 +210,16 @@ int LinuxParser::RunningProcesses() {
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Command(int pid) { 
     string line;
-
+    unsigned int char_limit = 40;
     string key, id1;
     std::ifstream stream(kProcDirectory +to_string(pid) + kCmdlineFilename);
 
     if (stream.is_open()) {
       std::getline(stream, line);
-      return line; //return the whole line
+      if (line.size()>char_limit)
+        return (line.substr(0,char_limit)+"...");
+      else
+        return line; //return the whole line
     }
   
   return string(); 
@@ -235,7 +238,9 @@ string LinuxParser::Ram(int pid) {
         std::istringstream linestream(line);
         //get tag and memory
         linestream >> key >> id1;
-        if(key == "VmSize:")
+        //if(key == "VmSize:")
+        //Using VmData instead of VmSize in order to display pysical RAM, as kindly suggested by a reviewer and can be seen here https://man7.org/linux/man-pages/man5/proc.5.html
+        if(key == "VmData:")
           return id1;
       }
     }
@@ -292,6 +297,8 @@ long LinuxParser::UpTime(int pid) {
      string line;
     vector <string> parse;
     string value;
+    long up_time_sys;
+    long time_pid_start;
     std::ifstream stream(kProcDirectory +to_string(pid) + kStatFilename);
 
     if (stream.is_open()) {
@@ -303,7 +310,11 @@ long LinuxParser::UpTime(int pid) {
           parse.push_back(value);
         }
         //return only the uptime
-         return stol(str_check(parse[21]));
+        
+         up_time_sys = LinuxParser::UpTime();
+         time_pid_start  = (stol(str_check(parse[21]))/sysconf(_SC_CLK_TCK));
+         return up_time_sys - time_pid_start;
+        
       }
     }
   return 0; 
