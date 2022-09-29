@@ -8,7 +8,7 @@ using std::vector;
 using std::stof;
 using LinuxParser::CPUStates;
 
-// TODO: Return the aggregate CPU utilization
+// Return the aggregate CPU utilization
 
 float Processor::Utilization() { 
     //SOURCE: = https://stackoverflow.com/questions/23367857/accurate-calculation-of-cpu-usage-given-in-percentage-in-linux 
@@ -32,8 +32,8 @@ float Processor::Utilization() {
     return (Totald - Idled)/Totald;            // --------------> Just by using this line instead on the one bellow I was getting this error
                                                // *** %n in writable segment detected *** Aborted (core dumped)   
                                                // Everything seems fine to me :( I have no clue why do I get it
-                                               // If you have some spare time could you try and run it please? 
-                                               // Just to be sure it is not some issue with my VM
+                                               // If you have some spare time and want to fix this send me a PR 
+                                               // 
     */
     return (Total - Idle)/Total; 
     
